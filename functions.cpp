@@ -21,7 +21,7 @@ void init(char board[BOARD_SIZE][BOARD_SIZE])
 {
     const char figuresRow[BOARD_SIZE] = {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'};
 
-	memset(board, ' ', sizeof(char) * BOARD_SIZE * BOARD_SIZE);
+	memset(board, '.', sizeof(char) * BOARD_SIZE * BOARD_SIZE);
 
     for (unsigned i = 0; i < BOARD_SIZE; i++)
         board[0][i] = figuresRow[i];
@@ -43,6 +43,7 @@ void draw(char board[BOARD_SIZE][BOARD_SIZE])
 	for (int i = BOARD_SIZE - 1; i >= 0; i--) {
 		cout << i+1 << "| ";
 		for (unsigned j = 0; j < BOARD_SIZE; j++) {
+
 			cout << board[i][j]<<" ";
 		}
 		cout << endl;

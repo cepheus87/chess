@@ -9,18 +9,6 @@
 
 using namespace std;
 
-// Macierz przechowujaca poczatkowe rozstawienie szachownicy
-//const char startup[8][8] = {
-//	{ rook, knight, bishop, queen, king, bishop, knight, rook },
-//	{ pawn, pawn, pawn, pawn, pawn, pawn, pawn, pawn },
-//	{ 0, 0, 0, 0, 0, 0, 0, 0 },
-//	{ 0, 0, 0, 0, 0, 0, 0, 0 },
-//	{ 0, 0, 0, 0, 0, 0, 0, 0 },
-//	{ 0, 0, 0, 0, 0, 0, 0, 0 },
-//	{ -pawn, -pawn, -pawn, -pawn, -pawn, -pawn, -pawn, -pawn },
-//	{ -rook, -knight, -bishop, -queen, -king, -bishop,-knight, -rook }
-//};
-
 int main(int argc, char* argv[]){
 
 	instructions();

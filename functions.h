@@ -16,6 +16,14 @@
 
 const int BOARD_SIZE = 8;
 
+// Figury na szachownicy
+//const int pawn = 10;
+//const int bishop = 35;
+//const int knight = 30;
+//const int rook = 50;
+//const int queen = 90;
+//const int king = 200;
+
 void gotoXY(short,short);
 void init(char[BOARD_SIZE][BOARD_SIZE]);
 void draw(char[BOARD_SIZE][BOARD_SIZE]);
