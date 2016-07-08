@@ -12,5 +12,7 @@ using namespace std;
 
 void instructions(){
 
+	cout<<"Program do gry w szachy"<<endl;
+
 	cout<<"tu ingtrukcje test Michal1"<<endl;
 }
