@@ -12,5 +12,5 @@ using namespace std;
 
 void instructions(){
 
-	cout<<"tu instrukcje"<<endl;
+	cout<<"tu ingtrukcje test Michal"<<endl;
 }
