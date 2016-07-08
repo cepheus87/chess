@@ -58,11 +58,72 @@ void draw(char board[BOARD_SIZE][BOARD_SIZE])
 		cout << fieldName << " ";
 		fieldName++;
 	}
+
+	cout<<endl;
 }
+
+std::pair<int,int> getPosition(std::string pos)
+{
+	pair<int, int> posPair;
+	const char* firstChar = &pos.at(0);
+	const char* secondChar = &pos.at(1);
+		if ( (atoi(firstChar)) != 0)
+		{
+			posPair.first= atoi(firstChar) - 1;
+			int castedChar = static_cast<int>(secondChar[0]);
+			if(castedChar >= 65 && castedChar <=73) // 65 == A
+			{
+				posPair.second=castedChar - 64 - 1;
+			}
+			else
+			{
+				posPair.second=castedChar-96 - 1;  // 97 == a
+			}
+		}
+		else
+		{
+
+			posPair.first= atoi(secondChar) - 1;
+			int castedChar = static_cast<int>(firstChar[0]);
+			if(castedChar >= 65 && castedChar <=73) // 65 == A
+			{
+				posPair.second=castedChar-64 - 1;
+			}
+			else
+			{
+				posPair.second=castedChar-96 - 1;  // 97 == a
+			}
+
+		}
+
+		return posPair;
+}
+
+void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE] )
+{
+	if(start.length() != 2) cout<<"zla instrukcja, podaj pole startowe"<<endl;
+	if(end.length() != 2) cout<<"zla instrukcja, podaj pole koncowe"<<endl;
+
+	pair<int,int> startPos = getPosition(start);
+	pair<int,int> endPos = getPosition(end);
+
+#ifdef DEBUG
+	cout<<startPos.first<<" "<<startPos.second<<endl;
+	cout<<endPos.first<<" "<<endPos.second<<endl;
+	cout<< board[startPos.first][startPos.second]<<endl;
+	cout<<board[endPos.first][endPos.second]<<endl;
+#endif
+
+	board[endPos.first][endPos.second] = board[startPos.first][startPos.second];
+	board[startPos.first][startPos.second] = '.';
+
+
+
+	}
 
 void instructions(){
 
 	cout<<"Program do gry w szachy"<<endl;
 
-	cout<<"Tu bêdzie instrukcja jak grac..."<<endl<<endl;
+	cout<<"Prosze podac pole startowe i pole koncowe ruchu"<<endl<<endl;
 }

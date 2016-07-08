@@ -17,4 +17,7 @@ int main(int argc, char* argv[]){
 	init((char(*)[BOARD_SIZE])b);
 	draw((char(*)[BOARD_SIZE])b);
 
+	move("A1", "A3", (char(*)[BOARD_SIZE])b);
+
+	draw((char(*)[BOARD_SIZE])b);
 }
