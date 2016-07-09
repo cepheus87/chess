@@ -144,7 +144,12 @@ void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE]
 
 void instructions(){
 
-	cout<<"Program do gry w szachy"<<endl;
+	cout<<"PROGRAM DO GRY W SZACHY"<<endl<<endl;
 
-	cout<<"Prosze podac pole startowe i pole koncowe ruchu";
+	cout<<"Ruchu wybranej figury dokonujemy poprzez podanie jej wspolrzednych\n";
+	cout<<"odpowiadajacych pozycji na szachownicy. Pierwsza wspolrzedna jest \n";
+	cout<<"litera odpowiada kolumnie a druga liczba odpowiada wierszowi.\n";
+	cout<<"Przykladowo wspolrzedne A1 odpowiadaja polu w pierwszym rzedzie i\n";
+	cout<<"pierszej kolumnie. Uzytkownik moze podawac wspolrzedne zarowno malymi\n";
+	cout<<"jak i duzymi literami. Ruchy wykonujemy do rezygnacji z gry.";
 }
