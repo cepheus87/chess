@@ -1,10 +1,3 @@
-/*
- * main.cpp
- *
- *  Created on: 08.07.2016
- *      Author: Tomek
- */
-
 #include "functions.h"
 
 using namespace std;
@@ -12,37 +5,37 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 
-	instructions();
+	menu();
 
 	char* b = new char[BOARD_SIZE * BOARD_SIZE];
 	init((char(*)[BOARD_SIZE])b);
 	draw((char(*)[BOARD_SIZE])b);
 
 	string startPosition;
-	string endPositon;
+	string endPosition;
 	char exit;
+
+	std::string msg_F="Prosze podac pole figury, ktora chcesz poruszyc: ";
+    std::string msg_S="Prosze podac pole gdzie przesunac figure: ";
+    std::string msg_Err="Podano bledna wspolrzedna!";
+    std::string msg_Contin="Graj dalej lub nie - t/n: ";
 
 	do{
 
-		gotoXY(31,21);
-		cout<<"   ";
-		gotoXY(34,22);
+		gotoXY(msg_F.length(),21);
+		cout<<"        ";
+		gotoXY(msg_S.length(),22);
+		cout<<"        ";
+		gotoXY(msg_Contin.length(),23);
 		cout<<"          ";
-		gotoXY(25,23);
-		cout<<"          ";
 
-		gotoXY(0,21);
-		cout<<"Podaj aktualna pozycje figury: ";
-		cin>>startPosition;
+		startPosition=instructions_F(msg_F,msg_Err);
+		endPosition=instructions_S(msg_S,msg_Err);
 
-		gotoXY(0,22);
-		cout<<"Podaj pole na ktore wykonac ruch: ";
-		cin>>endPositon;
-
-		move(startPosition, endPositon, (char(*)[BOARD_SIZE])b);
+		move(startPosition, endPosition, (char(*)[BOARD_SIZE])b);
 
 		gotoXY(0,23);
-		cout<<"Graj dalej lub nie - t/n: ";
+		cout<<msg_Contin;
 		cin>>exit;
 
 	}while(exit != 'n');

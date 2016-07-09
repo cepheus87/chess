@@ -1,10 +1,3 @@
-/*
- * functions.h
- *
- *  Created on: 08.07.2016
- *      Author: Tomek
- */
-
 #ifndef FUNCTIONS_H_
 #define FUNCTIONS_H_
 
@@ -14,6 +7,8 @@
 #include <cstring>
 #include <string>
 #include <utility>
+#include <cstdio>
+#include <sstream>
 
 const int BOARD_SIZE = 8;
 
@@ -28,8 +23,11 @@ const int BOARD_SIZE = 8;
 void gotoXY(short,short);
 void init(char[BOARD_SIZE][BOARD_SIZE]);
 void draw(char[BOARD_SIZE][BOARD_SIZE]);
-void instructions();
+void menu();
+std::string instructions_F(std::string msg_F,std::string msg_Err);
+std::string instructions_S(std::string msg_S,std::string msg_Err);
 void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE] );
 std::pair<int,int> getPosition(std::string pos);
 
 #endif /* FUNCTIONS_H_ */
+

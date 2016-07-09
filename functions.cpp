@@ -1,11 +1,3 @@
-/*
- * functions.cpp
- *
- *  Created on: 08.07.2016
- *      Author: Tomek
- */
-
-
 #include"functions.h"
 
 using namespace std;
@@ -146,14 +138,76 @@ void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE]
 
 }
 
-void instructions(){
+void menu(){
+            cout<<"Program do gry w szachy"<<endl<<endl;
+            cout<<"Ruch wybranej figury dokonujemy poprzez podanie jej wspolrzednych\n";
+            cout<<"odpowiadajacych pozycji na szachownicy. Pierwsza wspolrzedna - duza\n";
+            cout<<"litera, odpowiada kolumnie a druga liczba odpowiada wierszowi.\n";
+            cout<<"Przykladowo wspolrzedne A1 odpowiadaja polu w pierwszym rzedzie i\n";
+            cout<<"pierszej kolumnie. Uzytkownik moze podawac wspolrzedne zarowno malymi\n";
+            cout<<"jak i duzymi literami. Ruchy wykonujemy do rezygnacji z gry."<<endl;
 
-	cout<<"PROGRAM DO GRY W SZACHY"<<endl<<endl;
+}
 
-	cout<<"Ruchu wybranej figury dokonujemy poprzez podanie jej wspolrzednych\n";
-	cout<<"odpowiadajacych pozycji na szachownicy. Pierwsza wspolrzedna jest \n";
-	cout<<"litera odpowiada kolumnie a druga liczba odpowiada wierszowi.\n";
-	cout<<"Przykladowo wspolrzedne A1 odpowiadaja polu w pierwszym rzedzie i\n";
-	cout<<"pierszej kolumnie. Uzytkownik moze podawac wspolrzedne zarowno malymi\n";
-	cout<<"jak i duzymi literami. Ruchy wykonujemy do rezygnacji z gry.";
+string instructions_F(std::string msg_F, std::string msg_Err){
+		char c_letterF;
+		short int si_digitF;
+
+		while(1)
+		{
+        gotoXY(0,21);
+		cout<<msg_F; //cout<<"Prosze podac pole figury, ktora chcesz poruszyc: ";
+		cin>>c_letterF>>si_digitF;
+
+		if((c_letterF<'A' || c_letterF>'A'+BOARD_SIZE-1) || (si_digitF<0 || si_digitF>BOARD_SIZE) || !cin.good())
+		{
+			cin.clear();
+			cin.sync();
+			cout<<msg_Err<<endl;  //cout<<"Bledna wspolrzedna pionka!!!"<<endl;
+			gotoXY(msg_Err.length(),22);
+		    cout<<"                      ";
+		    gotoXY(msg_F.length(),21);
+		    cout<<"        ";
+			continue;
+		}
+		break;
+		}
+
+		std::string s_fig (1,c_letterF);
+		stringstream ss;
+		ss << si_digitF;
+		s_fig += ss.str();
+
+		return s_fig;
+}
+
+string instructions_S(std::string msg_S, std::string msg_Err){
+		char c_letterS;
+		short int si_digitS;
+
+		while(1)
+		{
+        gotoXY(0,22);
+		cout<<msg_S;    //cout<<"Prosze podac pole gdzie przesunac figure: ";
+		cin>>c_letterS>>si_digitS;
+		if((c_letterS<'A' || c_letterS>'A'+BOARD_SIZE-1) || (si_digitS<0 || si_digitS>BOARD_SIZE) || !cin.good())
+				{
+					cout<<msg_Err<<endl;  //cout<<"Bledna wspolrzedna pola!!!!"<<endl;
+					cin.clear();
+					cin.sync();
+                    gotoXY(msg_Err.length(),23);
+                    cout<<"     ";
+                    gotoXY(msg_S.length(),22);
+                    cout<<"   ";
+					continue;
+				}
+				break;
+				}
+
+		std::string s_sqr (1,c_letterS);
+		stringstream ss;
+		ss << si_digitS;
+		s_sqr += ss.str();
+
+		return s_sqr;
 }
