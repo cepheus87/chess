@@ -24,6 +24,13 @@ int main(int argc, char* argv[])
 
 	do{
 
+		gotoXY(31,21);
+		cout<<"   ";
+		gotoXY(34,22);
+		cout<<"          ";
+		gotoXY(25,23);
+		cout<<"          ";
+
 		gotoXY(0,21);
 		cout<<"Podaj aktualna pozycje figury: ";
 		cin>>startPosition;
