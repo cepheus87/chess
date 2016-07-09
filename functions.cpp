@@ -101,8 +101,6 @@ std::pair<int,int> getPosition(std::string pos)
 
 void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE] )
 {
-	if(start.length() != 2) cout<<"zla instrukcja, podaj pole startowe"<<endl;
-	if(end.length() != 2) cout<<"zla instrukcja, podaj pole koncowe"<<endl;
 
 	pair<int,int> startPos = getPosition(start);
 	pair<int,int> endPos = getPosition(end);
@@ -126,14 +124,20 @@ void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE]
 	chosenFigure = board[endPos.first][endPos.second];
 
 	startXPostoDrow=3+startPos.second*2;
-	cout<<"sX: "<<startXPostoDrow;
 	startYPostoDrow=17-startPos.first;
+
+#ifdef DEBUG
+	cout<<"sX: "<<startXPostoDrow;
 	cout<<"sY: "<<startYPostoDrow;
+#endif
 
 	endXPostoDrow=3+endPos.second*2;
-	cout<<"eX: "<<endXPostoDrow;
 	endYPostoDrow=17-endPos.first;
+
+#ifdef DEBUG
+	cout<<"eX: "<<endXPostoDrow;
 	cout<<"eY: "<<endYPostoDrow;
+#endif
 
 	gotoXY(startXPostoDrow,startYPostoDrow);
 	printf(".");
