@@ -117,13 +117,34 @@ void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE]
 	board[endPos.first][endPos.second] = board[startPos.first][startPos.second];
 	board[startPos.first][startPos.second] = '.';
 
+	int startXPostoDrow;
+	int startYPostoDrow;
+	int endXPostoDrow;
+	int endYPostoDrow;
+	char chosenFigure;
 
+	chosenFigure = board[endPos.first][endPos.second];
 
-	}
+	startXPostoDrow=3+startPos.second*2;
+	cout<<"sX: "<<startXPostoDrow;
+	startYPostoDrow=17-startPos.first;
+	cout<<"sY: "<<startYPostoDrow;
+
+	endXPostoDrow=3+endPos.second*2;
+	cout<<"eX: "<<endXPostoDrow;
+	endYPostoDrow=17-endPos.first;
+	cout<<"eY: "<<endYPostoDrow;
+
+	gotoXY(startXPostoDrow,startYPostoDrow);
+	printf(".");
+	gotoXY(endXPostoDrow,endYPostoDrow);
+	printf("%c",chosenFigure);
+
+}
 
 void instructions(){
 
 	cout<<"Program do gry w szachy"<<endl;
 
-	cout<<"Prosze podac pole startowe i pole koncowe ruchu"<<endl<<endl;
+	cout<<"Prosze podac pole startowe i pole koncowe ruchu";
 }

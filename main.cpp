@@ -18,22 +18,23 @@ int main(int argc, char* argv[])
 	init((char(*)[BOARD_SIZE])b);
 	draw((char(*)[BOARD_SIZE])b);
 
-	string start;
-	string end;
+	string startPosition;
+	string endPositon;
 	char exit;
 
 	do{
 
-		cout<<"\nPodaj aktualn¹ pozycjê figury: ";
-		cin>>start;
+		gotoXY(0,21);
+		cout<<"Podaj aktualna pozycje figury: ";
+		cin>>startPosition;
 
-		cout<<"Podaj pole na które wykonac ruch: ";
-		cin>>end;
+		gotoXY(0,22);
+		cout<<"Podaj pole na ktore wykonac ruch: ";
+		cin>>endPositon;
 
-		move(start, end, (char(*)[BOARD_SIZE])b);
-		draw((char(*)[BOARD_SIZE])b);
+		move(startPosition, endPositon, (char(*)[BOARD_SIZE])b);
 
-		cout<<endl;
+		gotoXY(0,23);
 		cout<<"Graj dalej lub nie - t/n: ";
 		cin>>exit;
 
