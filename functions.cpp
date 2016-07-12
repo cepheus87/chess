@@ -2,12 +2,18 @@
 
 using namespace std;
 
+#ifdef _WIN32
 void gotoXY(short x, short y)
 {
-	COORD coord = {x, y};
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-
+    COORD coord = {x, y};
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
+#else
+void gotoXY(short x, short y)
+{
+    cout << "\033[" << y << ";" << x << "f" << flush;
+}
+#endif
 
 void init(char board[BOARD_SIZE][BOARD_SIZE])
 {
@@ -52,6 +58,66 @@ void draw(char board[BOARD_SIZE][BOARD_SIZE])
 	}
 
 	cout<<endl;
+}
+
+bool checkMove(std::string positions)
+{
+	string tempPosition;
+
+	for(int i = 0; i < positions.length(); i++ )
+	{
+		if(isalpha(positions[i])){
+			tempPosition+= positions[i];
+		}
+		if(isdigit(positions[i])){
+			tempPosition+= positions[i];
+		}
+
+	}
+	cout << "tempPosition: "<<tempPosition<<endl;
+
+	if(tempPosition.length()!=4){
+		cout<<"Wprowadziles" <<tempPosition.length()<<", powinno byc 4!";
+		return false;
+	}
+
+	bool checkChar = true;
+
+	for(int i = 0; i < tempPosition.length(); i++)
+	{
+		if ( i%2 == 0 ){
+			if ( (atoi(&tempPosition[i])) == 0)
+			{
+
+				int castedChar = static_cast<int>(tempPosition[i]);
+					if(!((castedChar >= 65 && castedChar <=65+BOARD_SIZE)||(castedChar >= 97 && castedChar <= 97+BOARD_SIZE))) // 65 == A
+					{
+						cout<<"Litera na pozycji "<<i+1<<" powinna byc z zakresu A-H lub a-h!"<<endl;
+						checkChar = false;
+					}
+			}else{
+				cout<<"Znak "<<i+1<<" powinien byc litera a jest cyfra!"<<endl;
+				return false;
+			}
+
+
+		}else{
+
+			if ( ( atoi(&tempPosition[i] ) < 1 )||( atoi(&tempPosition[i])>8 ) ){
+
+				cout<<"Liczba na pozycji "<<i+1<<" powinna byc z zakresu 1-8!"<<endl;
+				checkChar = false;
+
+			}
+		}
+
+	}
+
+	if (checkChar == false)
+	{
+		return false;
+	}
+
 }
 
 std::pair<int,int> getPosition(std::string pos)

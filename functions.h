@@ -3,12 +3,16 @@
 
 #include <iostream>
 #include <stdlib.h>
-#include <windows.h>
 #include <cstring>
 #include <string>
 #include <utility>
 #include <cstdio>
 #include <sstream>
+#include <cctype>
+
+#ifdef _WIN32
+    #include <windows.h>
+#endif
 
 const int BOARD_SIZE = 8;
 
@@ -27,7 +31,8 @@ void menu();
 std::string instructions_F(std::string msg_F,std::string msg_Err);
 std::string instructions_S(std::string msg_S,std::string msg_Err);
 void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE] );
-std::pair<int,int> getPosition(std::string pos);
+std::pair<int,int> getPosition(std::string);
+bool checkMove(std::string);
 
 #endif /* FUNCTIONS_H_ */
 

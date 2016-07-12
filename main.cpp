@@ -11,14 +11,20 @@ int main(int argc, char* argv[])
 	init((char(*)[BOARD_SIZE])b);
 	draw((char(*)[BOARD_SIZE])b);
 
+    checkMove("      z9   *%@#$ Z6    ");
+    cin.ignore();
+    exit(1);
+
 	string startPosition;
 	string endPosition;
+
 	char exit;
 
 	std::string msg_F="Prosze podac pole figury, ktora chcesz poruszyc: ";
     std::string msg_S="Prosze podac pole gdzie przesunac figure: ";
     std::string msg_Err="Podano bledna wspolrzedna!";
     std::string msg_Contin="Graj dalej lub nie - t/n: ";
+
 
 	do{
 
@@ -31,6 +37,7 @@ int main(int argc, char* argv[])
 
 		startPosition=instructions_F(msg_F,msg_Err);
 		endPosition=instructions_S(msg_S,msg_Err);
+
 
 		move(startPosition, endPosition, (char(*)[BOARD_SIZE])b);
 
