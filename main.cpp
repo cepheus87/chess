@@ -6,6 +6,10 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 
+#ifndef _WIN32
+  system("clear");
+#endif
+
 	menu();
 
 	char* b = new char[BOARD_SIZE * BOARD_SIZE];
@@ -21,12 +25,15 @@ int main(int argc, char* argv[])
     // Tam zaczalem myslec nad funkcjami do ruchu poszczegolnych figur z zalozeniem, ze jezeli ruch jest poprawny to zwraca true, jezeli nie to false
 
     //  w jakiejs petli to trzeba puscic :)
-    pair<bool,string> moveCorrectness = checkMove("      A2   *%@#$ A3    ");
+    pair<bool,string> moveCorrectness = checkMove("      E1   *%@#$ F2    ");
 
     if(moveCorrectness.first){
     	startPosition = moveCorrectness.second.substr(0,2);
     	endPosition = moveCorrectness.second.substr(2,2);
-    	cout<<startPosition<<" "<<endPosition<<endl;
+	//    	cout<<startPosition<<" "<<endPosition<<endl;
+
+	moveEngine(getPosition(startPosition), getPosition(endPosition), (char(*)[BOARD_SIZE])b );
+
     }
     else{
     // do poprawiania ruchu
