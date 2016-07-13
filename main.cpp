@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "chesspieceFunc.h"
 
 using namespace std;
 
@@ -11,13 +12,30 @@ int main(int argc, char* argv[])
 	init((char(*)[BOARD_SIZE])b);
 	draw((char(*)[BOARD_SIZE])b);
 
-    checkMove("      z9   *%@#$ Z6    ");
+
+    string startPosition;
+    string endPosition;
+
+
+    // Stworzylem pliki chesspieceFunc.xxx Tam oddzielnie beda funkcje dla pionkow - przyda sie pozniej ze wzgledu na pisanie obiektowe
+    // Tam zaczalem myslec nad funkcjami do ruchu poszczegolnych figur z zalozeniem, ze jezeli ruch jest poprawny to zwraca true, jezeli nie to false
+
+    //  w jakiejs petli to trzeba puscic :)
+    pair<bool,string> moveCorrectness = checkMove("      A2   *%@#$ A3    ");
+
+    if(moveCorrectness.first){
+    	startPosition = moveCorrectness.second.substr(0,2);
+    	endPosition = moveCorrectness.second.substr(2,2);
+    	cout<<startPosition<<" "<<endPosition<<endl;
+    }
+    else{
+    // do poprawiania ruchu
+    }
+
+
+
     cin.ignore();
     exit(1);
-
-	string startPosition;
-	string endPosition;
-
 	char exit;
 
 	std::string msg_F="Prosze podac pole figury, ktora chcesz poruszyc: ";

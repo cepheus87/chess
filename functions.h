@@ -32,7 +32,7 @@ std::string instructions_F(std::string msg_F,std::string msg_Err);
 std::string instructions_S(std::string msg_S,std::string msg_Err);
 void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE] );
 std::pair<int,int> getPosition(std::string);
-bool checkMove(std::string);
+std::pair<bool,std::string> checkMove(std::string);
 
 #endif /* FUNCTIONS_H_ */
 

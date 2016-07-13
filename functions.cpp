@@ -60,11 +60,13 @@ void draw(char board[BOARD_SIZE][BOARD_SIZE])
 	cout<<endl;
 }
 
-bool checkMove(std::string positions)
+std::pair<bool, std::string> checkMove(std::string positions)
 {
 	string tempPosition;
+	pair<bool, string> moveCorrectness(true, "");
 
-	for(int i = 0; i < positions.length(); i++ )
+
+	for(size_t i = 0; i < positions.length(); i++ )
 	{
 		if(isalpha(positions[i])){
 			tempPosition+= positions[i];
@@ -74,16 +76,19 @@ bool checkMove(std::string positions)
 		}
 
 	}
+#ifdef DEBUG
 	cout << "tempPosition: "<<tempPosition<<endl;
+#endif
 
 	if(tempPosition.length()!=4){
 		cout<<"Wprowadziles" <<tempPosition.length()<<", powinno byc 4!";
-		return false;
+		moveCorrectness.first= false;
+		return moveCorrectness;
 	}
 
 	bool checkChar = true;
 
-	for(int i = 0; i < tempPosition.length(); i++)
+	for(size_t i = 0; i < tempPosition.length(); i++)
 	{
 		if ( i%2 == 0 ){
 			if ( (atoi(&tempPosition[i])) == 0)
@@ -97,7 +102,7 @@ bool checkMove(std::string positions)
 					}
 			}else{
 				cout<<"Znak "<<i+1<<" powinien byc litera a jest cyfra!"<<endl;
-				return false;
+				moveCorrectness.first= false;
 			}
 
 
@@ -115,8 +120,12 @@ bool checkMove(std::string positions)
 
 	if (checkChar == false)
 	{
-		return false;
+		moveCorrectness.first= false;
+		return moveCorrectness;
 	}
+
+	moveCorrectness.second=tempPosition;
+	return moveCorrectness;
 
 }
 
