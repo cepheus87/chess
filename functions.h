@@ -28,12 +28,9 @@ void gotoXY(short,short);
 void init(char[BOARD_SIZE][BOARD_SIZE]);
 void draw(char[BOARD_SIZE][BOARD_SIZE]);
 void menu();
-std::string instructions_F(std::string msg_F,std::string msg_Err);
-std::string instructions_S(std::string msg_S,std::string msg_Err);
 void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE] );
 void move2(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE] );
 std::pair<int,int> getPosition(std::string);
 std::pair<bool,std::string> checkMove(std::string);
 
 #endif /* FUNCTIONS_H_ */
-

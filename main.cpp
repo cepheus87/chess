@@ -5,70 +5,72 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-
 #ifndef _WIN32
-  system("clear");
+system("clear");
 #endif
 
-	menu();
+
+	menu();     //wypisanie instrukcji
 
 	char* b = new char[BOARD_SIZE * BOARD_SIZE];
 	init((char(*)[BOARD_SIZE])b);
 	draw((char(*)[BOARD_SIZE])b);
 
+	string startPosition;
+	string endPosition;
+	string command;
+	string blank;
+	char exit;
 
-    string startPosition;
-    string endPosition;
+	std::string msg_Command="Prosze podac pole pionka i pole docelowe ruchu: ";
+    std::string msg_Contin="Graj dalej lub nie - t/n: ";
 
+	do{
+        gotoXY(msg_Command.length(),22);
+		cout<<"        ";
 
-    // Stworzylem pliki chesspieceFunc.xxx Tam oddzielnie beda funkcje dla pionkow - przyda sie pozniej ze wzgledu na pisanie obiektowe
-    // Tam zaczalem myslec nad funkcjami do ruchu poszczegolnych figur z zalozeniem, ze jezeli ruch jest poprawny to zwraca true, jezeli nie to false
+        gotoXY(0,25);
+        blank.replace(0,msg_Contin.length()+1,msg_Contin.length()+1,' ');
+		cout<<blank;
 
-    //  w jakiejs petli to trzeba puscic :)
-    pair<bool,string> moveCorrectness = checkMove("      E1   *%@#$ F2    ");
+		gotoXY(0,23);
+        blank.replace(0,0,20,' ');
+		cout<<blank;
+
+		gotoXY(0,24);
+		cout<<blank;
+
+		gotoXY(0,22);
+        cout<<msg_Command;
+		std::getline(std::cin,command);
+
+		//Sprawdzanie poprawnosci wpisanej komendy
+		pair<bool,string> moveCorrectness = checkMove(command);
 
     if(moveCorrectness.first){
     	startPosition = moveCorrectness.second.substr(0,2);
     	endPosition = moveCorrectness.second.substr(2,2);
-	//    	cout<<startPosition<<" "<<endPosition<<endl;
-
-	moveEngine(getPosition(startPosition), getPosition(endPosition), (char(*)[BOARD_SIZE])b );
+    	cout<<"Pionek z pozycji: "<<startPosition<<", zostal przeniesiony na pole: "<<endPosition<<endl;
+    	move(startPosition, endPosition, (char(*)[BOARD_SIZE])b);   //jesli komenda poprawna - wykonaj ruch
+    	//moveEngine(getPosition(startPosition), getPosition(endPosition), (char(*)[BOARD_SIZE])b );
+        //Na razie zakomentowane - trzeba dopisac
 
     }
     else{
-    // do poprawiania ruchu
+        //jesli komenda nie poprawna
+    	gotoXY(0,24);
+    	cout<<"Ruch nie zostanie wykonany. Podaj jeszcze raz potrzebne pola!"<<endl;
     }
-
-
-
-    cin.ignore();
-    exit(1);
-	char exit;
-
-	std::string msg_F="Prosze podac pole figury, ktora chcesz poruszyc: ";
-    std::string msg_S="Prosze podac pole gdzie przesunac figure: ";
-    std::string msg_Err="Podano bledna wspolrzedna!";
-    std::string msg_Contin="Graj dalej lub nie - t/n: ";
-
-
-	do{
-
-		gotoXY(msg_F.length(),21);
-		cout<<"        ";
-		gotoXY(msg_S.length(),22);
-		cout<<"        ";
-		gotoXY(msg_Contin.length(),23);
-		cout<<"          ";
-
-		startPosition=instructions_F(msg_F,msg_Err);
-		endPosition=instructions_S(msg_S,msg_Err);
-
-
-		move(startPosition, endPosition, (char(*)[BOARD_SIZE])b);
-
-		gotoXY(0,23);
+        //Petla walidacji komendy wpisywanej w zapytanie o dalsza gre
+        //Jesli wpisane brednie - program bedzie czekal na 't' lub 'n'
+        do {
+        gotoXY(msg_Contin.length(),25);
+		cout<<"      ";
+		gotoXY(0,25);
 		cout<<msg_Contin;
 		cin>>exit;
+        }while(exit!='n'&&exit!='t');
 
+		cin.ignore();
 	}while(exit != 'n');
 }
