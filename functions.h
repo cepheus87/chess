@@ -28,9 +28,11 @@ void gotoXY(short,short);
 void init(char[BOARD_SIZE][BOARD_SIZE]);
 void draw(char[BOARD_SIZE][BOARD_SIZE]);
 void menu();
-void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE] );
+void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE],bool &);
 void move2(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE] );
 std::pair<int,int> getPosition(std::string);
 std::pair<bool,std::string> checkMove(std::string);
+bool checkPlayer(std::pair<int,int>, char board[BOARD_SIZE][BOARD_SIZE],bool&);
+bool isAllowed(std::pair<int,int>, char board[BOARD_SIZE][BOARD_SIZE],bool&);
 
 #endif /* FUNCTIONS_H_ */

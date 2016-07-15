@@ -1,4 +1,5 @@
 #include"functions.h"
+#include"chesspieceFunc.h"
 
 using namespace std;
 
@@ -164,7 +165,7 @@ std::pair<int,int> getPosition(std::string pos)
 		return posPair;
 }
 
-void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE] )
+void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE],bool &player )
 {
 
   	pair<int,int> startPos = getPosition(start);
@@ -177,39 +178,115 @@ void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE]
 	cout<<board[endPos.first][endPos.second]<<endl;
 #endif
 
-	board[endPos.first][endPos.second] = board[startPos.first][startPos.second];
-	board[startPos.first][startPos.second] = '.';
+	if (isEmpty(startPos, board)){
+		cout<<"To pole jest puste."<<endl;
+	}else{
 
-	int startXPostoDrow;
-	int startYPostoDrow;
-	int endXPostoDrow;
-	int endYPostoDrow;
-	char chosenFigure;
+		bool copyPlayer = player;
+		if(checkPlayer(startPos,board,player)&&(isAllowed(endPos,board,copyPlayer))){
 
-	chosenFigure = board[endPos.first][endPos.second];
 
-	startXPostoDrow=3+startPos.second*2;
-	startYPostoDrow=17-startPos.first;
 
-#ifdef DEBUG
-	cout<<"sX: "<<startXPostoDrow;
-	cout<<"sY: "<<startYPostoDrow;
-#endif
+			board[endPos.first][endPos.second] = board[startPos.first][startPos.second];
+			board[startPos.first][startPos.second] = '.';
 
-	endXPostoDrow=3+endPos.second*2;
-	endYPostoDrow=17-endPos.first;
+			int startXPostoDrow;
+			int startYPostoDrow;
+			int endXPostoDrow;
+			int endYPostoDrow;
+			char chosenFigure;
 
-#ifdef DEBUG
-	cout<<"eX: "<<endXPostoDrow;
-	cout<<"eY: "<<endYPostoDrow;
-#endif
+			chosenFigure = board[endPos.first][endPos.second];
 
-	gotoXY(startXPostoDrow,startYPostoDrow);
-	printf(".");
-	gotoXY(endXPostoDrow,endYPostoDrow);
-	printf("%c",chosenFigure);
+			startXPostoDrow=3+startPos.second*2;
+			startYPostoDrow=17-startPos.first;
+
+		#ifdef DEBUG
+			cout<<"sX: "<<startXPostoDrow;
+			cout<<"sY: "<<startYPostoDrow;
+		#endif
+
+			endXPostoDrow=3+endPos.second*2;
+			endYPostoDrow=17-endPos.first;
+
+		#ifdef DEBUG
+			cout<<"eX: "<<endXPostoDrow;
+			cout<<"eY: "<<endYPostoDrow;
+		#endif
+
+			gotoXY(startXPostoDrow,startYPostoDrow);
+			printf(".");
+			gotoXY(endXPostoDrow,endYPostoDrow);
+			printf("%c",chosenFigure);
+
+			//cout<<"Pionek z pozycji: "<<start<<", zostal przeniesiony na pole: "<<end<<endl;
+			}
+	}
 
 }
+
+bool checkPlayer(std::pair<int,int> startPos, char board[BOARD_SIZE][BOARD_SIZE], bool& player)
+{
+
+	if (player)
+	{
+		if( (board[startPos.first][startPos.second] >= 65) && (board[startPos.first][startPos.second] <= 90) )
+		{
+			player = !player;
+			cout<<player;
+			return true;
+		}else{
+
+			cout << "Nie twoja figura"<<endl;
+			return false;
+		}
+
+
+	}else{
+
+
+		if( (board[startPos.first][startPos.second] >= 97) && (board[startPos.first][startPos.second] <= 122) )
+		{
+			player = !player;
+			cout<<player;
+			return true;
+		}else{
+
+			cout << "Nie twoja figura"<<endl;
+			return false;
+		}
+	}
+}
+
+bool isAllowed(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE], bool& player)
+{
+
+	if (player)
+	{
+		if( (board[endPos.first][endPos.second] >= 65) && (board[endPos.first][endPos.second] <= 90) )
+		{
+			cout<<"Nie mozesz wykonac ruchu na swoje pole."<<endl;
+			return false;
+		}else{
+
+			return true;
+		}
+
+
+	}else{
+
+
+		if( (board[endPos.first][endPos.second] >= 97) && (board[endPos.first][endPos.second] <= 122) )
+		{
+			cout<<"Nie mozesz wykonac ruchu na swoje pole."<<endl;
+			return false;
+		}else{
+
+			return true;
+		}
+	}
+}
+
 
 void move2(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE] )
 {

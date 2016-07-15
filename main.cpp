@@ -9,6 +9,7 @@ int main(int argc, char* argv[])
 system("clear");
 #endif
 
+	bool player = true;				// du¿e pionki
 
 	menu();     //wypisanie instrukcji
 
@@ -50,8 +51,7 @@ system("clear");
     if(moveCorrectness.first){
     	startPosition = moveCorrectness.second.substr(0,2);
     	endPosition = moveCorrectness.second.substr(2,2);
-    	cout<<"Pionek z pozycji: "<<startPosition<<", zostal przeniesiony na pole: "<<endPosition<<endl;
-    	move(startPosition, endPosition, (char(*)[BOARD_SIZE])b);   //jesli komenda poprawna - wykonaj ruch
+    	move(startPosition, endPosition, (char(*)[BOARD_SIZE])b,player);   //jesli komenda poprawna - wykonaj ruch
     	//moveEngine(getPosition(startPosition), getPosition(endPosition), (char(*)[BOARD_SIZE])b );
         //Na razie zakomentowane - trzeba dopisac
 
