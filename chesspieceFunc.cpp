@@ -7,6 +7,7 @@
 
 #include<utility>
 #include"chesspieceFunc.h"
+#include"functions.h"
 
 
 using namespace std;
@@ -59,10 +60,6 @@ bool moveEngine(std::pair<int,int> startPos, std::pair<int,int> endPos, char boa
 
 }
 
-bool isEmpty(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE] ){
-  if( board[endPos.first][endPos.second] == '.') return true;
-  else return false;
-}
 
 
 bool movePawn(){
@@ -104,7 +101,8 @@ bool moveKing(std::pair<int,int> startPos, std::pair<int,int> endPos, char board
 
 
   if( abs(endPos.first - startPos.first) <= 1 && abs(endPos.second - startPos.second) <=1 ){
-    move2(startPos, endPos, board);
+    bool temp = true;
+	  move(startPos, endPos, board, temp);
     return true;
   }
   else{

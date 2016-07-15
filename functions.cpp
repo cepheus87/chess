@@ -1,5 +1,5 @@
 #include"functions.h"
-#include"chesspieceFunc.h"
+
 
 using namespace std;
 
@@ -179,11 +179,11 @@ std::pair<int,int> getPosition(std::string pos)
 		return posPair;
 }
 
-void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE],bool &player )
+
+void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE], bool &player )
 {
 
-  	pair<int,int> startPos = getPosition(start);
-  	pair<int,int> endPos = getPosition(end);
+
 
 	#ifdef DEBUG
 		cout<<startPos.first<<" "<<startPos.second<<endl;
@@ -240,6 +240,13 @@ void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE]
 
 		}
 	}
+}
+
+void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE],bool &player )
+{
+  	pair<int,int> startPos = getPosition(start);
+  	pair<int,int> endPos = getPosition(end);
+  	move(startPos, endPos, board, player);
 }
 
 bool checkPlayer(std::pair<int,int> startPos, char board[BOARD_SIZE][BOARD_SIZE], bool& player)
@@ -318,50 +325,6 @@ bool isAllowed(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE], bo
 	}
 }
 
-void move2(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE] )
-{
-
-	#ifdef DEBUG
-		cout<<startPos.first<<" "<<startPos.second<<endl;
-		cout<<endPos.first<<" "<<endPos.second<<endl;
-		cout<< board[startPos.first][startPos.second]<<endl;
-		cout<<board[endPos.first][endPos.second]<<endl;
-	#endif
-
-	board[endPos.first][endPos.second] = board[startPos.first][startPos.second];
-	board[startPos.first][startPos.second] = '.';
-
-	int startXPostoDrow;
-	int startYPostoDrow;
-	int endXPostoDrow;
-	int endYPostoDrow;
-	char chosenFigure;
-
-	chosenFigure = board[endPos.first][endPos.second];
-
-	startXPostoDrow=3+startPos.second*2;
-	startYPostoDrow=17-startPos.first;
-
-	#ifdef DEBUG
-		cout<<"sX: "<<startXPostoDrow;
-		cout<<"sY: "<<startYPostoDrow;
-	#endif
-
-	endXPostoDrow=3+endPos.second*2;
-	endYPostoDrow=17-endPos.first;
-
-	#ifdef DEBUG
-		cout<<"eX: "<<endXPostoDrow;
-		cout<<"eY: "<<endYPostoDrow;
-	#endif
-
-	gotoXY(startXPostoDrow,startYPostoDrow);
-	printf(".");
-	gotoXY(endXPostoDrow,endYPostoDrow);
-	printf("%c",chosenFigure);
-
-}
-
 //Funkcja wypisywania instrukcji do gry w szachy
 void menu(){
             cout<<"Program do gry w szachy"<<endl<<endl;
@@ -372,4 +335,10 @@ void menu(){
             cout<<"pierszej kolumnie. Uzytkownik moze podawac wspolrzedne zarowno malymi\n";
             cout<<"jak i duzymi literami. Ruchy wykonujemy do rezygnacji z gry."<<endl;
 
+}
+
+
+bool isEmpty(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE] ){
+  if( board[endPos.first][endPos.second] == '.') return true;
+  else return false;
 }
