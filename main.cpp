@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
             } else {
 
                 //Sprawdzanie poprawnosci wpisanej komendy
-                pair<bool,string> moveCorrectness = checkMove(command);
+                pair<bool,string> moveCorrectness = checkMove(command,(char(*)[BOARD_SIZE])b);
 
                 if(moveCorrectness.first){
                 startPosition = moveCorrectness.second.substr(0,2);
@@ -82,3 +82,4 @@ int main(int argc, char* argv[])
             }
 	}while(exit != 't');
 }
+
