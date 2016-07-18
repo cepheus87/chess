@@ -88,40 +88,40 @@ void draw(char board[BOARD_SIZE][BOARD_SIZE])
 
 std::pair<bool, std::string> checkMove(std::string positions)
 {
-	string tempPosition;
+	string quantityOfCharacters="";
 	pair<bool, string> moveCorrectness(true, "");
 
 	for(size_t i = 0; i < positions.length(); i++ )
 	{
 		if(isalpha(positions[i])){
-			tempPosition+= positions[i];
+			quantityOfCharacters+= positions[i];
 		}
 		if(isdigit(positions[i])){
-			tempPosition+= positions[i];
+			quantityOfCharacters+= positions[i];
 		}
 
 	}
 
 	#ifdef DEBUG
-		cout << "tempPosition: "<<tempPosition<<endl;
+		cout << "quantityOfCharacters: "<<quantityOfCharacters<<endl;
 	#endif
 
-	if(tempPosition.length()!=4){
-		cout<<"Wprowadziles " <<tempPosition.length()<<" liter i cyfr, powinny byc tylko 4!";
+	if(quantityOfCharacters.length()!=4){
+		cout<<"Wprowadziles " <<quantityOfCharacters.length()<<" liter i cyfr, powinny byc tylko 4!";
 		moveCorrectness.first= false;
 		return moveCorrectness;
 	}
 
 	bool checkChar = true;
 
-	for(size_t i = 0; i < tempPosition.length(); i++)
+	for(size_t i = 0; i < quantityOfCharacters.length(); i++)
 	{
 		if ( i%2 == 0 )
 		{
-			if ( (atoi(&tempPosition[i])) == 0)
+			if ( (atoi(&quantityOfCharacters[i])) == 0)
 			{
 
-				int castedChar = static_cast<int>(tempPosition[i]);
+				char castedChar = quantityOfCharacters[i];
 
 				if(!((castedChar >= 'A' && castedChar <='A'+BOARD_SIZE)||(castedChar >= 'a' && castedChar <= 'a'+BOARD_SIZE))) // 65 == A
 				{
@@ -139,7 +139,7 @@ std::pair<bool, std::string> checkMove(std::string positions)
 		else
 		{
 
-			if ( ( atoi(&tempPosition[i] ) < 1 )||( atoi(&tempPosition[i])>8 ) )
+			if ( ( atoi(&quantityOfCharacters[i] ) < 1 )||( atoi(&quantityOfCharacters[i])>8 ) )
 			{
 
 				cout<<"Liczba na pozycji "<<i+1<<" powinna byc z zakresu 1-8!"<<endl;
@@ -156,7 +156,7 @@ std::pair<bool, std::string> checkMove(std::string positions)
 		return moveCorrectness;
 	}
 
-	moveCorrectness.second=tempPosition;
+	moveCorrectness.second=quantityOfCharacters;
 	return moveCorrectness;
 }
 
@@ -168,7 +168,7 @@ std::pair<int,int> getPosition(std::string pos)
 		if ( (atoi(firstChar)) != 0)
 		{
 			posPair.first= atoi(firstChar) - 1;
-			int castedChar = static_cast<int>(secondChar[0]);
+			char castedChar = secondChar[0];
 			if(castedChar >= 'A' && castedChar <='H') // 65 == A
 			{
 				posPair.second=castedChar - 64 - 1;
@@ -182,7 +182,7 @@ std::pair<int,int> getPosition(std::string pos)
 		{
 
 			posPair.first= atoi(secondChar) - 1;
-			int castedChar = static_cast<int>(firstChar[0]);
+			char castedChar = firstChar[0];
 
 			if(castedChar >= 65 && castedChar <=73) // 65 == A
 			{
@@ -380,7 +380,7 @@ bool isEmpty(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE] ){
 
 std::string checkCommands(std::string command)
 {
-    string temporaryCommand;
+    string temporaryCommand="";
     std::string modyfiedCommand="";
 	for(size_t i = 0; i < command.length(); i++ )
 	{
