@@ -86,7 +86,7 @@ void draw(char board[BOARD_SIZE][BOARD_SIZE])
 }
 
 
-std::pair<bool, std::string> checkMove(std::string positions)
+std::pair<bool, std::string> checkMove(std::string positions, char board[BOARD_SIZE][BOARD_SIZE])
 {
 	string quantityOfCharacters="";
 	pair<bool, string> moveCorrectness(true, "");
@@ -107,7 +107,20 @@ std::pair<bool, std::string> checkMove(std::string positions)
 	#endif
 
 	if(quantityOfCharacters.length()!=4){
-		cout<<"Wprowadziles " <<quantityOfCharacters.length()<<" liter i cyfr, powinny byc tylko 4!";
+
+		if(quantityOfCharacters.length()==3||quantityOfCharacters.length()==2)
+		            {
+		            cout<<"Wprowadziles " <<quantityOfCharacters.length()<<" znaki typu litera lub cyfra, powinny byc 4!";
+		            }else if (quantityOfCharacters.length()==0)
+		            {
+		            cout<<"Wprowadziles " <<quantityOfCharacters.length()<<" liter i cyfr, powinny byc 4!";
+		            }else if (quantityOfCharacters.length()==1)
+		            {
+		            cout<<"Wprowadziles " <<quantityOfCharacters.length()<<" litere lub cyfre, powinny byc 4!";
+		            } else{
+		            cout<<"Wprowadziles " <<quantityOfCharacters.length()<<" znakow typu litera lub cyfra, powinny byc tylko 4!";
+		            }
+
 		moveCorrectness.first= false;
 		return moveCorrectness;
 	}
@@ -149,6 +162,16 @@ std::pair<bool, std::string> checkMove(std::string positions)
 		}
 
 	}
+
+	std::string startPosition=quantityOfCharacters.substr(0,2);
+	pair<int,int> startPos = getPosition(startPosition);
+
+		if (isEmpty(startPos, board))
+		{
+	    cout<<"To pole jest puste."<<endl;
+	    moveCorrectness.first= false;
+	    return moveCorrectness;
+		}
 
 	if (checkChar == false)
 	{
@@ -211,12 +234,6 @@ void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOA
 		cout<<board[endPos.first][endPos.second]<<endl;
 	#endif
 
-	if (isEmpty(startPos, board))
-	{
-
-		cout<<"To pole jest puste."<<endl;
-
-	}else{
 
 		bool copyPlayer = player;
 		if(checkPlayer(startPos,board,player)&&(isAllowed(endPos,board,copyPlayer)))
@@ -256,11 +273,8 @@ void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOA
 			printf("%c",chosenFigure);
 
 			//cout<<"Pionek z pozycji: "<<start<<", zostal przeniesiony na pole: "<<end<<endl;
-
-		}
 	}
 }
-
 void move(std::string start, std::string end, char board[BOARD_SIZE][BOARD_SIZE],bool &player )
 {
   	pair<int,int> startPos = getPosition(start);
