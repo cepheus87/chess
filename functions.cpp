@@ -235,7 +235,7 @@ void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOA
 			chosenFigure = board[endPos.first][endPos.second];
 
 			startXPostoDrow=3+startPos.second*2;
-			startYPostoDrow=11-startPos.first;
+			startYPostoDrow=13-startPos.first;
 
 			#ifdef DEBUG
 				cout<<"sX: "<<startXPostoDrow;
@@ -243,7 +243,7 @@ void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOA
 			#endif
 
 			endXPostoDrow=3+endPos.second*2;
-			endYPostoDrow=11-endPos.first;
+			endYPostoDrow=13-endPos.first;
 
 			#ifdef DEBUG
 				cout<<"eX: "<<endXPostoDrow;
