@@ -34,11 +34,11 @@ int main(int argc, char* argv[])
 
 		if (player)
             {
-                msg_Command = "CZARNY: Prosze podac polecenie lub pole pionka i pole docelowe ruchu: ";
+                msg_Command = "BIALY: Prosze podac polecenie lub pole pionka i pole docelowe ruchu: ";
             }
             else
             {
-                msg_Command = "BIALY: Prosze podac polecenie lub pole pionka i pole docelowe ruchu: ";
+                msg_Command = "CZARNY: Prosze podac polecenie lub pole pionka i pole docelowe ruchu: ";
             }
 
 		gotoXY(0,17);
