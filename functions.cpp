@@ -46,16 +46,33 @@ void draw(char board[BOARD_SIZE][BOARD_SIZE])
 {
     gotoXY(0, 4);
 
-	for (int i = BOARD_SIZE - 1; i >= 0; i--) {
+    char fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
+
+
+	cout<< "   ";
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << fieldName << " ";
+		fieldName++;
+	}
+	cout << endl << "  ----------------" << endl;
+
+	for (int i = BOARD_SIZE - 1; i >= 0; i--)
+	{
+
 		cout << i+1 << "| ";
-		for (unsigned j = 0; j < BOARD_SIZE; j++) {
+
+		for (unsigned j = 0; j < BOARD_SIZE; j++)
+		{
 
 			cout << board[i][j]<<" ";
 		}
-		cout << endl;
+
+		cout << "|" << i+1 << endl;
 	}
 
-	char fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
+	fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
 	cout << "  ----------------" << endl;
 	cout<< "   ";
 
@@ -67,6 +84,7 @@ void draw(char board[BOARD_SIZE][BOARD_SIZE])
 
 	cout<<endl;
 }
+
 
 std::pair<bool, std::string> checkMove(std::string positions)
 {
@@ -330,7 +348,7 @@ bool isAllowed(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE], bo
 void menu(){
             gotoXY(10,0); //wysrodkowanie
             cout<<"Witaj w programie szachowym!"<<endl;
-            cout<<"Aby wyswietlic instrukcje gry wpisz polecenie 'INSTRUCTION'"<<endl;
+            cout<<"Aby wyswietlic instrukcje gry wpisz polecenie 'HELP'"<<endl;
             cout<<"Aby zakonczyc rozgrywke wpisz polecenie 'QUIT'"<<endl;
 
 }
@@ -350,7 +368,7 @@ void help(){
 
             for (int i=0; i<=10;i++)
 		{
-			clearLine(15+i);
+			clearLine(17+i);
 		}
 }
 
@@ -384,4 +402,3 @@ void clearLine(short y)
 	cout << setw(128) << " ";
 	gotoXY(0, y);
 }
-

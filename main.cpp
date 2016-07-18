@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 	{
 		for (int i=0; i<=5;i++)
 		{
-			clearLine(15+i);
+			clearLine(17+i);
 		}
 
 		if (player)
@@ -41,21 +41,21 @@ int main(int argc, char* argv[])
                 msg_Command = "BIALY: Prosze podac polecenie lub pole pionka i pole docelowe ruchu: ";
             }
 
-		gotoXY(0,15);
+		gotoXY(0,17);
         cout<<msg_Command;
 		std::getline(std::cin,command);
 		std::string modyfiedCommand=checkCommands(command);
 
         if (modyfiedCommand=="help")
             {
-                clearLine(15);
-                gotoXY(0,15);
+                clearLine(17);
+                gotoXY(0,17);
                 help();
             }else if (modyfiedCommand=="quit")
                 {
-                clearLine(15);
-                gotoXY(0,15);
-                cout <<"Wyjscie z gry";
+                clearLine(17);
+                gotoXY(0,17);
+                cout <<"Wyjscie z gry"<<endl;
                 exit='t';
             } else {
 
@@ -70,11 +70,11 @@ int main(int argc, char* argv[])
                 //Na razie zakomentowane - trzeba dopisac
                 } else {
                 //jesli komenda nie poprawna
-                gotoXY(0,17);
+                gotoXY(0,19);
                 cout<<"Ruch nie zostanie wykonany. Podaj jeszcze raz potrzebne pola!"<<endl;
                 }
 
-                gotoXY(0,18);
+                gotoXY(0,20);
                 cout << "Nacisnij ENTER aby kontynulowac...";
 
                 //Oczekiwanie na enter
