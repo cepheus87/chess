@@ -6,6 +6,8 @@ using namespace std;
 
 #ifdef _WIN32
 
+#define MOVE_X_LINUX_CORRECTION 0
+
 	void gotoXY(short x, short y)
 	{
 		COORD coord = {x, y};
@@ -13,6 +15,8 @@ using namespace std;
 	}
 
 #else
+
+#define MOVE_X_LINUX_CORRECTION 1
 
 	void gotoXY(short x, short y)
 	{
@@ -256,7 +260,7 @@ void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOA
 			unsigned int quantityLeftSpace = 3;
 			unsigned int lastBoardLine = 13;
 
-			startXPostoDrow = quantityLeftSpace + startPos.second * 2;
+			startXPostoDrow = quantityLeftSpace + startPos.second * 2 + MOVE_X_LINUX_CORRECTION;
 			startYPostoDrow = lastBoardLine - startPos.first;
 
 			#ifdef DEBUG
@@ -264,7 +268,7 @@ void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOA
 				cout<<"sY: "<<startYPostoDrow;
 			#endif
 
-			endXPostoDrow = quantityLeftSpace + endPos.second * 2;
+			endXPostoDrow = quantityLeftSpace + endPos.second * 2 + MOVE_X_LINUX_CORRECTION;
 			endYPostoDrow = lastBoardLine - endPos.first;
 
 			#ifdef DEBUG
@@ -375,6 +379,11 @@ void menu()
 
 void help(){
 
+#ifndef _WIN32
+#define LINUX_HELP_CORRECTION -1
+#else
+#define LINUX_HELP_CORRECTION 0
+#endif
             cout<<"Ruch wybranej figury dokonujemy poprzez podanie jej wspolrzednych\n";
             cout<<"odpowiadajacych pozycji na szachownicy. Pierwsza wspolrzedna - duza\n";
             cout<<"litera, odpowiada kolumnie a druga liczba odpowiada wierszowi.\n";
@@ -386,7 +395,9 @@ void help(){
             //Oczekiwanie na enter
             while (getchar() != '\n'){}
 
-            short firstLineToClear = 17;
+
+
+            short firstLineToClear = 17 + LINUX_HELP_CORRECTION;
             int quantityLineToClear = 10;
 
             for (int i=0; i <= quantityLineToClear; i++)
