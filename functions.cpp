@@ -44,14 +44,16 @@ void init(char board[BOARD_SIZE][BOARD_SIZE])
 
 void draw(char board[BOARD_SIZE][BOARD_SIZE])
 {
-    gotoXY(0, 4);
+	short firstLine = 4;
+
+    gotoXY(0, firstLine);
 
     char fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
 
 
 	cout<< "   ";
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < BOARD_SIZE; i++)
 	{
 		cout << fieldName << " ";
 		fieldName++;
@@ -76,7 +78,7 @@ void draw(char board[BOARD_SIZE][BOARD_SIZE])
 	cout << "  ----------------" << endl;
 	cout<< "   ";
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < BOARD_SIZE; i++)
 	{
 		cout << fieldName << " ";
 		fieldName++;
@@ -138,7 +140,7 @@ std::pair<bool, std::string> checkMove(std::string positions, char board[BOARD_S
 
 				if(!((castedChar >= 'A' && castedChar <='A'+BOARD_SIZE)||(castedChar >= 'a' && castedChar <= 'a'+BOARD_SIZE))) // 65 == A
 				{
-					cout<<"Litera na pozycji "<<i+1<<" powinna byc z zakresu A-H lub a-h!"<<endl;
+					cout << "Litera na pozycji " << i+1 << " powinna byc z zakresu A-H lub a-h!" << endl;
 					checkChar = false;
 				}
 
@@ -155,7 +157,7 @@ std::pair<bool, std::string> checkMove(std::string positions, char board[BOARD_S
 			if ( ( atoi(&quantityOfCharacters[i] ) < 1 )||( atoi(&quantityOfCharacters[i])>8 ) )
 			{
 
-				cout<<"Liczba na pozycji "<<i+1<<" powinna byc z zakresu 1-8!"<<endl;
+				cout << "Liczba na pozycji " << i+1 << " powinna byc z zakresu 1-8!" << endl;
 				checkChar = false;
 
 			}
@@ -163,7 +165,7 @@ std::pair<bool, std::string> checkMove(std::string positions, char board[BOARD_S
 
 	}
 
-	std::string startPosition=quantityOfCharacters.substr(0,2);
+	std::string startPosition = quantityOfCharacters.substr(0,2);
 	pair<int,int> startPos = getPosition(startPosition);
 
 		if (isEmpty(startPos, board))
@@ -194,11 +196,11 @@ std::pair<int,int> getPosition(std::string pos)
 			char castedChar = secondChar[0];
 			if(castedChar >= 'A' && castedChar <='H') // 65 == A
 			{
-				posPair.second=castedChar - 64 - 1;
+				posPair.second = castedChar - 'A';
 			}
 			else
 			{
-				posPair.second=castedChar-96 - 1;  // 97 == a
+				posPair.second = castedChar - 'a';  // 97 == a
 			}
 		}
 		else
@@ -207,13 +209,13 @@ std::pair<int,int> getPosition(std::string pos)
 			posPair.first= atoi(secondChar) - 1;
 			char castedChar = firstChar[0];
 
-			if(castedChar >= 65 && castedChar <=73) // 65 == A
+			if(castedChar >= 'A' && castedChar <= 'H') // 65 == A
 			{
-				posPair.second=castedChar-64 - 1;
+				posPair.second=castedChar - 'A';
 			}
 			else
 			{
-				posPair.second=castedChar-96 - 1;  // 97 == a
+				posPair.second=castedChar - 'a';  // 97 == a
 			}
 
 		}
@@ -251,16 +253,19 @@ void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOA
 
 			chosenFigure = board[endPos.first][endPos.second];
 
-			startXPostoDrow=3+startPos.second*2;
-			startYPostoDrow=13-startPos.first;
+			unsigned int quantityLeftSpace = 3;
+			unsigned int lastBoardLine = 13;
+
+			startXPostoDrow = quantityLeftSpace + startPos.second * 2;
+			startYPostoDrow = lastBoardLine - startPos.first;
 
 			#ifdef DEBUG
 				cout<<"sX: "<<startXPostoDrow;
 				cout<<"sY: "<<startYPostoDrow;
 			#endif
 
-			endXPostoDrow=3+endPos.second*2;
-			endYPostoDrow=13-endPos.first;
+			endXPostoDrow = quantityLeftSpace + endPos.second * 2;
+			endYPostoDrow = lastBoardLine - endPos.first;
 
 			#ifdef DEBUG
 				cout<<"eX: "<<endXPostoDrow;
@@ -301,9 +306,7 @@ bool checkPlayer(std::pair<int,int> startPos, char board[BOARD_SIZE][BOARD_SIZE]
 
 		}
 
-
 	}else{
-
 
 		if( (board[startPos.first][startPos.second] >= 'a') && (board[startPos.first][startPos.second] <= 'z') )
 		{
@@ -359,11 +362,14 @@ bool isAllowed(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE], bo
 }
 
 //Funkcja wypisywania instrukcji do gry w szachy
-void menu(){
-            gotoXY(10,0); //wysrodkowanie
-            cout<<"Witaj w programie szachowym!"<<endl;
-            cout<<"Aby wyswietlic instrukcje gry wpisz polecenie 'HELP'"<<endl;
-            cout<<"Aby zakonczyc rozgrywke wpisz polecenie 'QUIT'"<<endl;
+void menu()
+{
+	short centerPosition = 10;
+
+	gotoXY(centerPosition,0); //wysrodkowanie
+    cout<<"Witaj w programie szachowym!"<<endl;
+    cout<<"Aby wyswietlic instrukcje gry wpisz polecenie 'HELP'"<<endl;
+    cout<<"Aby zakonczyc rozgrywke wpisz polecenie 'QUIT'"<<endl;
 
 }
 
@@ -380,10 +386,13 @@ void help(){
             //Oczekiwanie na enter
             while (getchar() != '\n'){}
 
-            for (int i=0; i<=10;i++)
-		{
-			clearLine(17+i);
-		}
+            short firstLineToClear = 17;
+            int quantityLineToClear = 10;
+
+            for (int i=0; i <= quantityLineToClear; i++)
+            {
+            	clearLine(firstLineToClear+i);
+            }
 }
 
 
@@ -412,7 +421,9 @@ std::string checkCommands(std::string command)
 
 void clearLine(short y)
 {
+	short consoleWidth = 128;
+
 	gotoXY(0, y);
-	cout << setw(128) << " ";
+	cout << setw(consoleWidth) << " ";
 	gotoXY(0, y);
 }
