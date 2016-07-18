@@ -43,18 +43,35 @@ void init(char board[BOARD_SIZE][BOARD_SIZE])
 
 void draw(char board[BOARD_SIZE][BOARD_SIZE])
 {
-    gotoXY(0, 10);
+    gotoXY(0, 2);
 
-	for (int i = BOARD_SIZE - 1; i >= 0; i--) {
+    char fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
+
+
+	cout<< "   ";
+
+	for (int i = 0; i < 8; i++)
+	{
+		cout << fieldName << " ";
+		fieldName++;
+	}
+	cout << endl << "  ----------------" << endl;
+
+	for (int i = BOARD_SIZE - 1; i >= 0; i--)
+	{
+
 		cout << i+1 << "| ";
-		for (unsigned j = 0; j < BOARD_SIZE; j++) {
+
+		for (unsigned j = 0; j < BOARD_SIZE; j++)
+		{
 
 			cout << board[i][j]<<" ";
 		}
-		cout << endl;
+
+		cout << "|" << i+1 << endl;
 	}
 
-	char fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
+	fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
 	cout << "  ----------------" << endl;
 	cout<< "   ";
 
@@ -88,7 +105,7 @@ std::pair<bool, std::string> checkMove(std::string positions)
 	#endif
 
 	if(tempPosition.length()!=4){
-		cout<<"Wprowadziles " <<tempPosition.length()<<" znakow, powinno byc 4!";
+		cout<<"Wprowadziles " <<tempPosition.length()<<" liter i cyfr, powinny byc tylko 4!";
 		moveCorrectness.first= false;
 		return moveCorrectness;
 	}
@@ -104,7 +121,7 @@ std::pair<bool, std::string> checkMove(std::string positions)
 
 				int castedChar = static_cast<int>(tempPosition[i]);
 
-				if(!((castedChar >= 65 && castedChar <=65+BOARD_SIZE)||(castedChar >= 97 && castedChar <= 97+BOARD_SIZE))) // 65 == A
+				if(!((castedChar >= 'A' && castedChar <='A'+BOARD_SIZE)||(castedChar >= 'a' && castedChar <= 'a'+BOARD_SIZE))) // 65 == A
 				{
 					cout<<"Litera na pozycji "<<i+1<<" powinna byc z zakresu A-H lub a-h!"<<endl;
 					checkChar = false;
@@ -150,13 +167,13 @@ std::pair<int,int> getPosition(std::string pos)
 		{
 			posPair.first= atoi(firstChar) - 1;
 			int castedChar = static_cast<int>(secondChar[0]);
-			if(castedChar >= 65 && castedChar <=73) // 65 == A
+			if(castedChar >= 'A' && castedChar <='I')
 			{
-				posPair.second=castedChar - 64 - 1;
+				posPair.second = castedChar - 64 - 1;
 			}
 			else
 			{
-				posPair.second=castedChar-96 - 1;  // 97 == a
+				posPair.second = castedChar-96 - 1;  // 97 == a
 			}
 		}
 		else
@@ -165,13 +182,13 @@ std::pair<int,int> getPosition(std::string pos)
 			posPair.first= atoi(secondChar) - 1;
 			int castedChar = static_cast<int>(firstChar[0]);
 
-			if(castedChar >= 65 && castedChar <=73) // 65 == A
+			if(castedChar >= 'A' && castedChar <='I') // 65 == A
 			{
-				posPair.second=castedChar-64 - 1;
+				posPair.second = castedChar-64 - 1;
 			}
 			else
 			{
-				posPair.second=castedChar-96 - 1;  // 97 == a
+				posPair.second = castedChar-96 - 1;  // 97 == a
 			}
 
 		}
@@ -216,7 +233,7 @@ void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOA
 			chosenFigure = board[endPos.first][endPos.second];
 
 			startXPostoDrow=3+startPos.second*2;
-			startYPostoDrow=17-startPos.first;
+			startYPostoDrow=11-startPos.first;
 
 			#ifdef DEBUG
 				cout<<"sX: "<<startXPostoDrow;
@@ -224,7 +241,7 @@ void move(std::pair<int,int> startPos, std::pair<int,int> endPos, char board[BOA
 			#endif
 
 			endXPostoDrow=3+endPos.second*2;
-			endYPostoDrow=17-endPos.first;
+			endYPostoDrow=11-endPos.first;
 
 			#ifdef DEBUG
 				cout<<"eX: "<<endXPostoDrow;
@@ -254,7 +271,7 @@ bool checkPlayer(std::pair<int,int> startPos, char board[BOARD_SIZE][BOARD_SIZE]
 
 	if (player)
 	{
-		if( (board[startPos.first][startPos.second] >= 65) && (board[startPos.first][startPos.second] <= 90) )
+		if( (board[startPos.first][startPos.second] >= 'A') && (board[startPos.first][startPos.second] <= 'Z') )
 		{
 
 			return true;
@@ -272,7 +289,7 @@ bool checkPlayer(std::pair<int,int> startPos, char board[BOARD_SIZE][BOARD_SIZE]
 	}else{
 
 
-		if( (board[startPos.first][startPos.second] >= 97) && (board[startPos.first][startPos.second] <= 122) )
+		if( (board[startPos.first][startPos.second] >= 'a') && (board[startPos.first][startPos.second] <= 'z') )
 		{
 			return true;
 
@@ -292,7 +309,7 @@ bool isAllowed(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE], bo
 
 	if (player)
 	{
-		if( (board[endPos.first][endPos.second] >= 65) && (board[endPos.first][endPos.second] <= 90) )
+		if( (board[endPos.first][endPos.second] >= 'A') && (board[endPos.first][endPos.second] <= 'Z') )
 		{
 			cout<<"Nie mozesz wykonac ruchu na swoje pole."<<endl;
 
@@ -309,7 +326,7 @@ bool isAllowed(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE], bo
 	}else{
 
 
-		if( (board[endPos.first][endPos.second] >= 97) && (board[endPos.first][endPos.second] <= 122) )
+		if( (board[endPos.first][endPos.second] >= 'a') && (board[endPos.first][endPos.second] <= 'z') )
 		{
 			cout<<"Nie mozesz wykonac ruchu na swoje pole."<<endl;
 
@@ -335,6 +352,13 @@ void menu(){
             cout<<"pierszej kolumnie. Uzytkownik moze podawac wspolrzedne zarowno malymi\n";
             cout<<"jak i duzymi literami. Ruchy wykonujemy do rezygnacji z gry."<<endl;
 
+}
+
+void clearLine(short y)
+{
+	gotoXY(0, y);
+	cout << setw(128) << " ";
+	gotoXY(0, y);
 }
 
 

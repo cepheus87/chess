@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <sstream>
 #include <cctype>
+#include <iomanip>
 
 #ifdef _WIN32
     #include <windows.h>
@@ -29,11 +30,12 @@ void init(char[BOARD_SIZE][BOARD_SIZE]);
 void draw(char[BOARD_SIZE][BOARD_SIZE]);
 void menu();
 void move(std::string, std::string, char [BOARD_SIZE][BOARD_SIZE],bool &);
-void move(std::pair<int,int>, std::pair<int,int>, char [BOARD_SIZE][BOARD_SIZE], bool& );
+void move(std::pair<int,int>, std::pair<int,int>, char [BOARD_SIZE][BOARD_SIZE], bool &);
 std::pair<int,int> getPosition(std::string);
 std::pair<bool,std::string> checkMove(std::string);
 bool checkPlayer(std::pair<int,int>, char [BOARD_SIZE][BOARD_SIZE], bool &);
 bool isAllowed(std::pair<int,int>, char [BOARD_SIZE][BOARD_SIZE], bool);
 bool isEmpty(std::pair<int,int>, char board[BOARD_SIZE][BOARD_SIZE] );
+void clearLine(short y);
 
 #endif /* FUNCTIONS_H_ */
