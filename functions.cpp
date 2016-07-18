@@ -1,4 +1,5 @@
 #include"functions.h"
+#include"chesspieceFunc.h"
 
 
 using namespace std;
@@ -43,35 +44,18 @@ void init(char board[BOARD_SIZE][BOARD_SIZE])
 
 void draw(char board[BOARD_SIZE][BOARD_SIZE])
 {
-    gotoXY(0, 2);
+    gotoXY(0, 4);
 
-    char fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
-
-
-	cout<< "   ";
-
-	for (int i = 0; i < 8; i++)
-	{
-		cout << fieldName << " ";
-		fieldName++;
-	}
-	cout << endl << "  ----------------" << endl;
-
-	for (int i = BOARD_SIZE - 1; i >= 0; i--)
-	{
-
+	for (int i = BOARD_SIZE - 1; i >= 0; i--) {
 		cout << i+1 << "| ";
-
-		for (unsigned j = 0; j < BOARD_SIZE; j++)
-		{
+		for (unsigned j = 0; j < BOARD_SIZE; j++) {
 
 			cout << board[i][j]<<" ";
 		}
-
-		cout << "|" << i+1 << endl;
+		cout << endl;
 	}
 
-	fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
+	char fieldName = 'A';	//Zmienna uzyta do wypisania rzedu liter, okreslajacych poszczegolne pola szachownicy
 	cout << "  ----------------" << endl;
 	cout<< "   ";
 
@@ -167,13 +151,13 @@ std::pair<int,int> getPosition(std::string pos)
 		{
 			posPair.first= atoi(firstChar) - 1;
 			int castedChar = static_cast<int>(secondChar[0]);
-			if(castedChar >= 'A' && castedChar <='I')
+			if(castedChar >= 'A' && castedChar <='H') // 65 == A
 			{
-				posPair.second = castedChar - 64 - 1;
+				posPair.second=castedChar - 64 - 1;
 			}
 			else
 			{
-				posPair.second = castedChar-96 - 1;  // 97 == a
+				posPair.second=castedChar-96 - 1;  // 97 == a
 			}
 		}
 		else
@@ -182,13 +166,13 @@ std::pair<int,int> getPosition(std::string pos)
 			posPair.first= atoi(secondChar) - 1;
 			int castedChar = static_cast<int>(firstChar[0]);
 
-			if(castedChar >= 'A' && castedChar <='I') // 65 == A
+			if(castedChar >= 65 && castedChar <=73) // 65 == A
 			{
-				posPair.second = castedChar-64 - 1;
+				posPair.second=castedChar-64 - 1;
 			}
 			else
 			{
-				posPair.second = castedChar-96 - 1;  // 97 == a
+				posPair.second=castedChar-96 - 1;  // 97 == a
 			}
 
 		}
@@ -344,14 +328,54 @@ bool isAllowed(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE], bo
 
 //Funkcja wypisywania instrukcji do gry w szachy
 void menu(){
-            cout<<"Program do gry w szachy"<<endl<<endl;
+            gotoXY(10,0); //wysrodkowanie
+            cout<<"Witaj w programie szachowym!"<<endl;
+            cout<<"Aby wyswietlic instrukcje gry wpisz polecenie 'INSTRUCTION'"<<endl;
+            cout<<"Aby zakonczyc rozgrywke wpisz polecenie 'QUIT'"<<endl;
+
+}
+
+void help(){
+
             cout<<"Ruch wybranej figury dokonujemy poprzez podanie jej wspolrzednych\n";
             cout<<"odpowiadajacych pozycji na szachownicy. Pierwsza wspolrzedna - duza\n";
             cout<<"litera, odpowiada kolumnie a druga liczba odpowiada wierszowi.\n";
             cout<<"Przykladowo wspolrzedne A1 odpowiadaja polu w pierwszym rzedzie i\n";
             cout<<"pierszej kolumnie. Uzytkownik moze podawac wspolrzedne zarowno malymi\n";
             cout<<"jak i duzymi literami. Ruchy wykonujemy do rezygnacji z gry."<<endl;
+            cout<<endl<<"Wcisnij ENTER by powrocic do gry"<<endl;
 
+            //Oczekiwanie na enter
+            while (getchar() != '\n'){}
+
+            for (int i=0; i<=10;i++)
+		{
+			clearLine(15+i);
+		}
+}
+
+
+bool isEmpty(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE] ){
+  if( board[endPos.first][endPos.second] == '.') return true;
+  else return false;
+}
+
+std::string checkCommands(std::string command)
+{
+    string temporaryCommand;
+    std::string modyfiedCommand="";
+	for(size_t i = 0; i < command.length(); i++ )
+	{
+		if(isalpha(command[i])){
+                if(isupper(command[i]))
+                {
+                     command[i]=tolower(command[i]);
+                }
+			temporaryCommand+= command[i];
+		}
+
+	}
+	return temporaryCommand;
 }
 
 void clearLine(short y)
@@ -361,8 +385,3 @@ void clearLine(short y)
 	gotoXY(0, y);
 }
 
-
-bool isEmpty(std::pair<int,int> endPos, char board[BOARD_SIZE][BOARD_SIZE] ){
-  if( board[endPos.first][endPos.second] == '.') return true;
-  else return false;
-}

@@ -1,4 +1,5 @@
 #include "functions.h"
+#include"chesspieceFunc.h"
 
 
 using namespace std;
@@ -7,12 +8,12 @@ int main(int argc, char* argv[])
 {
 
 	#ifndef _WIN32
-		system("clear");
+	system("clear");
 	#endif
 
 	bool player = true;				// du¿e pionki
 
-	//menu();     //wypisanie instrukcji
+	menu();     //wypisanie instrukcji
 
 	char* b = new char[BOARD_SIZE * BOARD_SIZE];
 	init((char(*)[BOARD_SIZE])b);
@@ -21,11 +22,8 @@ int main(int argc, char* argv[])
 	string startPosition;
 	string endPosition;
 	string command;
-	//string blank;
-	char exit = 't';
+	char exit = 'n';
 	std::string msg_Command;
-
-    //std::string msg_Contin="Graj dalej lub nie - t/n: ";
 
 	do
 	{
@@ -35,65 +33,52 @@ int main(int argc, char* argv[])
 		}
 
 		if (player)
-		{
-			msg_Command = "CZARNE: Prosze podac pole pionka i pole docelowe ruchu: ";
-		}
-		else
-		{
-			msg_Command = "BIALE: Prosze podac pole pionka i pole docelowe ruchu: ";
-		}
-
-        //gotoXY(0,25);
-        //blank.replace(0,msg_Contin.length()+1,msg_Contin.length()+1,' ');
-		//cout<<blank;
-
-		//gotoXY(0,23);
-        //blank.replace(0,0,20,' ');
-		//cout<<blank;
-
-		//gotoXY(0,14);
-		//cout<<blank;
+            {
+                msg_Command = "CZARNY: Prosze podac polecenie lub pole pionka i pole docelowe ruchu: ";
+            }
+            else
+            {
+                msg_Command = "BIALY: Prosze podac polecenie lub pole pionka i pole docelowe ruchu: ";
+            }
 
 		gotoXY(0,15);
-        cout << msg_Command;
+        cout<<msg_Command;
 		std::getline(std::cin,command);
+		std::string modyfiedCommand=checkCommands(command);
 
-		//Sprawdzanie poprawnosci wpisanej komendy
-		pair<bool,string> moveCorrectness = checkMove(command);
+        if (modyfiedCommand=="help")
+            {
+                clearLine(15);
+                gotoXY(0,15);
+                help();
+            }else if (modyfiedCommand=="quit")
+                {
+                clearLine(15);
+                gotoXY(0,15);
+                cout <<"Wyjscie z gry";
+                exit='t';
+            } else {
 
-		if(moveCorrectness.first)
-		{
-			startPosition = moveCorrectness.second.substr(0,2);
-			endPosition = moveCorrectness.second.substr(2,2);
-			move(startPosition, endPosition, (char(*)[BOARD_SIZE])b,player);   //jesli komenda poprawna - wykonaj ruch
-			//moveEngine(getPosition(startPosition), getPosition(endPosition), (char(*)[BOARD_SIZE])b );
-			//Na razie zakomentowane - trzeba dopisac
+                //Sprawdzanie poprawnosci wpisanej komendy
+                pair<bool,string> moveCorrectness = checkMove(command);
 
-		}
-		else
-		{
-			//jesli komenda nie poprawna
-			gotoXY(0,17);
-			cout<<"Ruch nie zostanie wykonany. Podaj jeszcze raz potrzebne pola!"<<endl;
+                if(moveCorrectness.first){
+                startPosition = moveCorrectness.second.substr(0,2);
+                endPosition = moveCorrectness.second.substr(2,2);
+                move(startPosition, endPosition, (char(*)[BOARD_SIZE])b,player);   //jesli komenda poprawna - wykonaj ruch
+                //moveEngine(getPosition(startPosition), getPosition(endPosition), (char(*)[BOARD_SIZE])b );
+                //Na razie zakomentowane - trzeba dopisac
+                } else {
+                //jesli komenda nie poprawna
+                gotoXY(0,17);
+                cout<<"Ruch nie zostanie wykonany. Podaj jeszcze raz potrzebne pola!"<<endl;
+                }
 
-		}
+                gotoXY(0,18);
+                cout << "Nacisnij ENTER aby kontynulowac...";
 
-        //Petla walidacji komendy wpisywanej w zapytanie o dalsza gre
-        //Jesli wpisane brednie - program bedzie czekal na 't' lub 'n'
-
-//        do
-//        {
-//			gotoXY(msg_Contin.length(),25);
-//			cout<<"      ";
-//			gotoXY(0,25);
-//			cout<<msg_Contin;
-//			cin>>exit;
-//
-//        }while(exit!='n'&&exit!='t');
-
-		gotoXY(0,18);
-		cout << "Nacisnij ENTER aby kontynulowac...";
-		cin.ignore();
-
-	}while(exit != 'n');
+                //Oczekiwanie na enter
+                while (getchar() != '\n'){}
+            }
+	}while(exit != 't');
 }
